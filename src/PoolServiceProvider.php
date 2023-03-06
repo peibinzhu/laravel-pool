@@ -6,12 +6,10 @@ namespace PeibinLaravel\Pool;
 
 use Illuminate\Support\ServiceProvider;
 use PeibinLaravel\Pool\SimplePool\PoolFactory;
-use PeibinLaravel\Utils\Providers\RegisterProviderConfig;
+use PeibinLaravel\ProviderConfig\Contracts\ProviderConfigInterface;
 
-class PoolServiceProvider extends ServiceProvider
+class PoolServiceProvider extends ServiceProvider implements ProviderConfigInterface
 {
-    use RegisterProviderConfig;
-
     public function __invoke(): array
     {
         return [
