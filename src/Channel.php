@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PeibinLaravel\Pool;
 
+use PeibinLaravel\Coroutine\Coroutine;
+use PeibinLaravel\Engine\Channel as CoChannel;
 use PeibinLaravel\Pool\Contracts\ConnectionInterface;
 use SplQueue;
-use Swoole\Coroutine;
-use Swoole\Coroutine\Channel as CoChannel;
 
 class Channel
 {
@@ -21,7 +21,7 @@ class Channel
         $this->queue = new SplQueue();
     }
 
-    public function pop(float $timeout): ConnectionInterface | false
+    public function pop(float $timeout): ConnectionInterface|false
     {
         if ($this->isCoroutine()) {
             return $this->channel->pop($timeout);
@@ -48,6 +48,6 @@ class Channel
 
     protected function isCoroutine(): bool
     {
-        return Coroutine::getCid() > 0;
+        return Coroutine::id() > 0;
     }
 }
